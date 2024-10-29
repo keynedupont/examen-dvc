@@ -1,6 +1,12 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import os
+import yaml
+
+#charger les paramètres depuis le fichier de config params.yaml
+with open("params.yaml") as f:
+    params = yaml.safe_load(f)
+
 
 def data_normalization(input_train_path, input_test_path, output_dir):
     """
@@ -33,9 +39,9 @@ def data_normalization(input_train_path, input_test_path, output_dir):
 
 if __name__ == "__main__":
     # Définir les chemins d'entrée et de sortie
-    input_train_file = "data/processed/X_train.csv"
-    input_test_file = "data/processed/X_test.csv"
-    output_directory = "data/processed"
+    input_train_file = params['data_processed_paths']['X_train_path']
+    input_test_file = params['data_processed_paths']['X_test_path']
+    output_directory = params['data_processed_paths']['normalized_data']    
     
     # Appeler la fonction pour normaliser et sauvegarder les données
     data_normalization(input_train_file, input_test_file, output_directory)

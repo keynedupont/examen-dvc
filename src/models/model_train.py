@@ -4,6 +4,11 @@ from sklearn.linear_model import ElasticNet
 import pickle
 import os
 import joblib
+import yaml
+
+#charger les paramètres depuis le fichier de config params.yaml
+with open("params.yaml") as f:
+    params = yaml.safe_load(f)
 
 def train_elastic_net(X_train_path, y_train_path, params_pkl_path, output_dir):
     """
@@ -42,10 +47,11 @@ def train_elastic_net(X_train_path, y_train_path, params_pkl_path, output_dir):
 
 if __name__ == "__main__":
     # Définir les chemins d'entrée et de sortie
-    X_train_file = "data/processed/X_train_scaled.csv"
-    y_train_file = "data/processed/y_train.csv"
-    best_params_pkl = "models/best_elastic_net_params.pkl"  # Fichier .pkl contenant les meilleurs paramètres
-    output_directory = "models"
+    X_train_file = params['data_normalized_paths']['X_train_path']
+    y_train_file = params['data_processed_paths']['y_train_path']
+    best_params_pkl = params['models_paths']['best_params']  # Fichier .pkl contenant les meilleurs paramètres
+    output_directory = params['models_paths']['trained_model_path']
+    
 
     # Entraîner le modèle Elastic Net avec les meilleurs paramètres
     train_elastic_net(X_train_file, y_train_file, best_params_pkl, output_directory)

@@ -1,9 +1,14 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
+import yaml
+
+#charger les paramètres depuis le fichier de config params.yaml
+with open("params.yaml") as f:
+    params = yaml.safe_load(f)
 
 
-def data_split(input_path, output_dir, test_size=0.2, random_state=42):
+def data_split(input_path, output_dir, test_size, random_state):
     """
     Charge le dataset, split en train/test, et sauvegarde les fichiers résultants.
     
@@ -36,8 +41,11 @@ def data_split(input_path, output_dir, test_size=0.2, random_state=42):
 
 if __name__ == "__main__":
     # Définir les chemins d'entrée et de sortie
-    input_file = "data/raw_data/raw.csv"
-    output_directory = "data/processed"
+    input_file = params['data_split_paths']['raw_data']
+    output_directory = params['data_split_paths']['processed_data']
+    test_size_param = params['split_params']['test_size']
+    random_state_param = params['split_params']['random_state']
+    
     
     # Appeler la fonction pour splitter et sauvegarder les données
-    data_split(input_file, output_directory)
+    data_split(input_file, output_directory, test_size_param, random_state_param)

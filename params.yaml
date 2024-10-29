@@ -1,0 +1,54 @@
+# Tous les paramètres de config utilisés par les scripts pour éviter d'avoir à les modifier dans les scripts
+
+## Chemins
+# Chemin des données à splitter
+data_split_paths:
+  raw_data: "data/raw_data/raw.csv"
+  processed_data: "data/processed/split"
+
+
+# Chemins des données splittées
+data_processed_paths:
+  X_train_path: data/processed/split/X_train.csv
+  X_test_path: data/processed/split/X_test.csv
+  y_train_path: data/processed/split/y_train.csv
+  y_test_path: data/processed/split/y_test.csv
+  normalized_data: "data/processed/normalized"
+
+
+# Chemins des données normalizées
+data_normalized_paths:
+  X_train_path: data/processed/normalized/X_train_scaled.csv
+  X_test_path: data/processed/normalized/X_test_scaled.csv
+
+
+# Chemins des données des modèles
+models_paths:
+  model_params: "models/params"
+  best_params: "models/params/best_elastic_net_params.pkl"
+  trained_model_path: "models/trained"
+  trained_model_file: "models/trained/model_trained_elastic_net.pkl"
+ 
+
+
+# Chemins des données de prédiction et de metric
+data_paths:
+  predictions_file: "data/predictions/predictions.csv"
+  metrics_file:  "metrics/scores.json"
+
+
+## Paramètres
+# Paramètres du split des données
+split_params:
+  test_size: 0.2
+  random_state: 42
+
+
+# Paramètres de la recherche par grille
+gridsearch_params:
+  alpha: [0.1, 1, 10, 100]
+  l1_ratio: [0.2, 0.5, 0.8]
+  cv_folds: 5
+  n_jobs: -1
+  scoring: "neg_mean_squared_error"
+

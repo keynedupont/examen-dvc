@@ -4,6 +4,12 @@ import json
 import os
 import pickle
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+import yaml
+
+#charger les paramètres depuis le fichier de config params.yaml
+with open("params.yaml") as f:
+    params = yaml.safe_load(f)
+
 
 def evaluate_model(X_test_path, y_test_path, model_pkl_path, predictions_output_path, metrics_output_path):
     """
@@ -60,11 +66,12 @@ def evaluate_model(X_test_path, y_test_path, model_pkl_path, predictions_output_
 
 if __name__ == "__main__":
     # Définir les chemins d'entrée et de sortie
-    X_test_file = "data/processed/X_test_scaled.csv"
-    y_test_file = "data/processed/y_test.csv"
-    model_pkl_file = "models/model_trained_elastic_net.pkl"
-    predictions_output_file = "data/predictions.csv"
-    metrics_output_file = "metrics/scores.json"
+    X_test_file = params['data_normalized_paths']['X_test_path']
+    y_test_file = params['data_processed_paths']['y_test_path']
+    model_pkl_file = params['models_paths']['trained_model_file']
+    predictions_output_file = params['data_paths']['predictions_file']
+    metrics_output_file = params['data_paths']['metrics_file']
+    
 
     # Évaluer le modèle et générer les prédictions
     evaluate_model(X_test_file, y_test_file, model_pkl_file, predictions_output_file, metrics_output_file)

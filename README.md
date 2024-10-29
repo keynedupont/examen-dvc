@@ -1,3 +1,12 @@
+# Ajout commentaire
+
+params.yaml  # Contient les paramètres et les chemins utilisés par les scripts
+
+Des sous-dossiers ont été ajoutés comme split, normalized pour éviter les conflits de suivi de dvc
+
+
+
+
 # Examen DVC et Dagshub
 Dans ce dépôt vous trouverez l'architecture proposé pour mettre en place la solution de l'examen. 
 

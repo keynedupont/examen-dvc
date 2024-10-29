@@ -3,7 +3,11 @@ from sklearn.linear_model import ElasticNet
 from sklearn.model_selection import GridSearchCV
 import os
 import pickle
+import yaml
 
+#charger les paramètres depuis le fichier de config params.yaml
+with open("params.yaml") as f:
+    params = yaml.safe_load(f)
 
 def grid_search_elastic_net(X_train_path, y_train_path, output_dir):
     """
@@ -21,14 +25,14 @@ def grid_search_elastic_net(X_train_path, y_train_path, output_dir):
     # Initialiser le modèle Elastic Net
     model = ElasticNet()
 
-    # Définir la grille d'hyperparamètres
+    # Définir la grille d'hyperparamètres    
     param_grid = {
-        'alpha': [0.1, 1, 10, 100],
-        'l1_ratio': [0.2, 0.5, 0.8]
+    'alpha': params['gridsearch_params']['alpha'],
+    'l1_ratio': params['gridsearch_params']['l1_ratio']
     }
 
     # Initialiser GridSearchCV
-    grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=5, n_jobs=-1, scoring='neg_mean_squared_error', verbose=2)
+    grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=params['gridsearch_params']['cv_folds'], n_jobs=params['gridsearch_params']['n_jobs'], scoring=params['gridsearch_params']['scoring'], verbose=2)
 
     # Exécuter GridSearchCV
     grid_search.fit(X_train, y_train)
@@ -49,9 +53,10 @@ def grid_search_elastic_net(X_train_path, y_train_path, output_dir):
 
 if __name__ == "__main__":
     # Définir les chemins d'entrée et de sortie
-    X_train_file = "data/processed/X_train_scaled.csv"
-    y_train_file = "data/processed/y_train.csv"
-    output_directory = "models"
+    X_train_file = params['data_normalized_paths']['X_train_path']
+    y_train_file = params['data_processed_paths']['y_train_path']
+    output_directory = params['models_paths']['model_params']
+
 
     # Exécuter la recherche par grille
     grid_search_elastic_net(X_train_file, y_train_file, output_directory)
